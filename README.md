@@ -219,4 +219,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-<p align="center">Made with ❤️ for Nepal 🏔️</p>
+<p align="center">Made with  for Nepal </p>
