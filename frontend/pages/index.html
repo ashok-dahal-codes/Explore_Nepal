@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Nepal - Experience the Magic of Nepal</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fa-solid fa-mountain"></i>
+                <span>Explore Nepal</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">Destinations</a></li>
+                <li><a href="#">Tours</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="theme-toggle">
+                    <i class="fa-solid fa-sun"></i>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="themeToggle" aria-label="Toggle dark mode">
+                        <span class="slider"></span>
+                    </label>
+                    <i class="fa-solid fa-moon"></i>
+                </div>
+                <a href="login.html" class="btn-login">Login</a>
+                <a href="register.html" class="btn-signup">Sign Up</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Experience the Magic of Nepal</h1>
+            <p>From the sacred temples of Kathmandu to the world's highest peaks, your ultimate adventure starts here.</p>
+            <div class="hero-search">
+                <div class="search-field">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Where to?">
+                </div>
+                <div class="search-divider"></div>
+                <div class="search-field">
+                    <i class="fa-regular fa-calendar"></i>
+                    <input type="text" placeholder="When?">
+                </div>
+                <button class="btn-search">Search</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Destinations -->
+    <section class="featured-destinations">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">EXPLORE</div>
+                <div class="section-title-row">
+                    <h2>Featured Destinations</h2>
+                    <a href="explore.html" class="view-all">View All Destinations <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="destinations-grid">
+
+                <!-- Card 1 -->
+                <div class="destination-card">
+                    <div class="card-image">
+                        <img src="../assets/images/kathmandu.jpg" alt="Kathmandu Valley">
+                        <span class="badge trending">Trending</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Kathmandu Valley</h3>
+                        <p>Ancient temples and bustling markets filled with rich cultural heritage.</p>
+                        <div class="card-footer">
+                            <div class="rating">
+                                <i class="fa-solid fa-star"></i>
+                                <span>4.9</span>
+                                <span class="reviews">(1.2k)</span>
+                            </div>
+                            <div class="price">$499+</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="destination-card">
+                    <div class="card-image">
+                        <img src="../assets/images/everest.jpg" alt="Everest Base Camp">
+                    </div>
+                    <div class="card-body">
+                        <h3>Everest Base Camp</h3>
+                        <p>The ultimate trek to the roof of the world with unparalleled mountain views.</p>
+                        <div class="card-footer">
+                            <div class="rating">
+                                <i class="fa-solid fa-star"></i>
+                                <span>5.0</span>
+                                <span class="reviews">(850)</span>
+                            </div>
+                            <div class="price">$1,299+</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="destination-card">
+                    <div class="card-image">
+                        <img src="../assets/images/pokhara.jpg" alt="Pokhara Lakeside">
+                    </div>
+                    <div class="card-body">
+                        <h3>Pokhara Lakeside</h3>
+                        <p>Relax by serene lakes reflecting the massive peaks of the Annapurna range.</p>
+                        <div class="card-footer">
+                            <div class="rating">
+                                <i class="fa-solid fa-star"></i>
+                                <span>4.8</span>
+                                <span class="reviews">(2.1k)</span>
+                            </div>
+                            <div class="price">$350+</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-label center">PROCESS</div>
+            <h2 class="section-title center">How it Works</h2>
+            <p class="section-subtitle center">Your journey to Nepal is just three simple steps away. We handle the details so you can enjoy the magic.</p>
+            <div class="steps-grid">
+
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <h3>1. Discover</h3>
+                    <p>Browse our curated list of destinations, treks, and cultural experiences across Nepal.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-icon green">
+                        <i class="fa-regular fa-calendar-check"></i>
+                    </div>
+                    <h3>2. Plan</h3>
+                    <p>Customize your itinerary with our local experts to match your interests and budget.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-icon dark">
+                        <i class="fa-solid fa-ticket"></i>
+                    </div>
+                    <h3>3. Book</h3>
+                    <p>Secure your guides and permits through our network of verified local partners.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fa-solid fa-mountain"></i>
+                        <span>Explore Nepal</span>
+                    </div>
+                    <p>Empowering travelers to experience the authentic beauty and culture of Nepal through sustainable and local-first tourism.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Share on social media"><i class="fa-solid fa-share-nodes"></i></a>
+                        <a href="#" aria-label="View image gallery"><i class="fa-regular fa-image"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <h4>EXPLORE</h4>
+                    <ul>
+                        <li><a href="#">Trekking Peaks</a></li>
+                        <li><a href="#">Cultural Tours</a></li>
+                        <li><a href="#">Wildlife Safaris</a></li>
+                        <li><a href="#">Hidden Gems</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>COMPANY</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Team</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-newsletter">
+                    <h4>NEWSLETTER</h4>
+                    <p>Join our newsletter for travel guides and exclusive local insights.</p>
+                    <input type="email" placeholder="Your email">
+                    <button class="btn-subscribe">Subscribe</button>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <span>2024 EXPLORE NEPAL TRAVEL. ALL RIGHTS RESERVED.</span>
+                <div class="footer-bottom-links">
+                    <a href="#">PRIVACY POLICY</a>
+                    <a href="#">TERMS OF SERVICE</a>
+                    <a href="#">COOKIE POLICY</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>
