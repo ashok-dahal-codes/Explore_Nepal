@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signing you in... - Explore Nepal</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .callback-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 2rem;
+            font-family: 'Inter', sans-serif;
+        }
+        .callback-container i.fa-spinner {
+            font-size: 2.5rem;
+            color: #2563eb;
+            margin-bottom: 1.5rem;
+        }
+        .callback-container h2 {
+            margin-bottom: 0.5rem;
+        }
+        .callback-container p {
+            color: #64748b;
+        }
+        .callback-container .error-message {
+            color: #dc2626;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="callback-container">
+        <i class="fa-solid fa-spinner fa-spin" id="spinner"></i>
+        <h2 id="statusTitle">Signing you in...</h2>
+        <p id="statusMessage">Please wait while we verify your account.</p>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000/api/users';
+
+        (async function handleSocialCallback() {
+            const hash = window.location.hash.substring(1);
+            const params = new URLSearchParams(hash);
+            const accessToken = params.get('access_token');
+
+            if (!accessToken) {
+                showError('No access token found. Redirecting to login...');
+                return redirectToLogin();
+            }
+
+            const provider = 'google';
+
+            try {
+                const response = await fetch(`${API_BASE}/social-login/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        provider: provider,
+                        access_token: accessToken,
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('access_token', data.tokens.access);
+                    localStorage.setItem('refresh_token', data.tokens.refresh);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    window.location.href = 'index.html';
+                } else {
+                    const errorMsg = data.error || 'Social login failed. Please try again.';
+                    showError(errorMsg + ' Redirecting to login...');
+                    redirectToLogin();
+                }
+            } catch (err) {
+                console.error('Social login error:', err);
+                showError('Network error. Redirecting to login...');
+                redirectToLogin();
+            }
+        })();
+
+        function showError(message) {
+            document.getElementById('spinner').className = 'fa-solid fa-circle-exclamation';
+            document.getElementById('spinner').style.color = '#dc2626';
+            document.getElementById('statusTitle').textContent = 'Login Failed';
+            document.getElementById('statusMessage').textContent = message;
+            document.getElementById('statusMessage').classList.add('error-message');
+        }
+
+        function redirectToLogin() {
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

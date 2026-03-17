@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Explore Nepal</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="auth-wrapper">
+        <!-- Left: Image Panel -->
+        <div class="auth-image">
+            <img src="../assets/images/hero.jpg" alt="Nepal landscape">
+            <div class="auth-image-overlay"></div>
+            <div class="auth-image-content">
+                <a href="index.html" class="auth-brand">
+                    <i class="fa-solid fa-mountain"></i>
+                    <span>Explore Nepal</span>
+                </a>
+                <h2>Welcome Back</h2>
+                <p>Sign in to continue planning your next Himalayan adventure.</p>
+            </div>
+        </div>
+
+        <!-- Right: Login Form -->
+        <div class="auth-form-panel">
+            <div class="auth-form-container">
+                <div class="auth-form-header">
+                    <h1>Sign In</h1>
+                    <p>Enter your credentials to access your account</p>
+                </div>
+
+                <div class="auth-social">
+                    <button class="btn-social" type="button" aria-label="Sign in with Google">
+                        <i class="fa-brands fa-google"></i>
+                        Google
+                    </button>
+                </div>
+
+                <div class="auth-divider">
+                    <span>or sign in with email</span>
+                </div>
+
+                <form id="loginForm" novalidate>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-envelope"></i>
+                            <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label for="password">Password</label>
+                            <a href="#" class="forgot-link">Forgot password?</a>
+                        </div>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                            <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group-inline">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="remember" name="remember">
+                            <span class="checkmark"></span>
+                            Remember me
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn-auth-submit">
+                        Sign In
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </form>
+
+                <p class="auth-switch">
+                    Don't have an account? <a href="register.html">Sign Up</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Destinations - Explore Nepal</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/explore.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-explore" id="navbar">
+        <div class="nav-container">
+            <a href="../pages/index.html" class="nav-logo">
+                <i class="fa-solid fa-mountain"></i>
+                <span>Explore Nepal</span>
+            </a>
+            <div class="nav-search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <label for="navSearch" class="sr-only">Search destinations</label>
+                <input type="text" id="navSearch" placeholder="Search destinations...">
+            </div>
+            <ul class="nav-links">
+                <li><a href="explore.html">Destinations</a></li>
+                <li><a href="about.html">About us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle dark mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <a href="register.html" class="btn-signup">Sign Up</a>
+                <a href="#" class="nav-avatar" aria-label="User profile">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="explore-main">
+        <div class="explore-container">
+
+            <!-- Sidebar Filters -->
+            <aside class="filter-sidebar" id="filterSidebar">
+                <div class="filter-header">
+                    <h3>Filter Results</h3>
+                    <span class="result-count" id="resultCount">Showing 6 destinations</span>
+                </div>
+
+                <!-- Category Filter -->
+                <div class="filter-group">
+                    <div class="filter-label">
+                        <i class="fa-solid fa-sliders"></i>
+                        <span>CATEGORY</span>
+                    </div>
+                    <div class="category-tags">
+                        <button class="tag active" data-category="all">All</button>
+                        <button class="tag" data-category="trekking">Trekking</button>
+                        <button class="tag" data-category="cultural">Cultural</button>
+                        <button class="tag" data-category="adventure">Adventure</button>
+                        <button class="tag" data-category="wildlife">Wildlife</button>
+                        <button class="tag" data-category="relaxing">Relaxing</button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Destinations Content -->
+            <section class="explore-content">
+                <div class="explore-header">
+                    <div>
+                        <h1>Destinations</h1>
+                        <p>Explore our handpicked experiences in Nepal</p>
+                    </div>
+                    <button class="btn-map-view" id="mapViewBtn">
+                        <i class="fa-solid fa-map"></i>
+                        Map View
+                    </button>
+                </div>
+
+                <!-- Mobile filter toggle -->
+                <button class="btn-filter-toggle" id="filterToggle">
+                    <i class="fa-solid fa-sliders"></i> Filters
+                </button>
+
+                <!-- Destination Cards Grid -->
+                <div class="explore-grid" id="exploreGrid">
+
+                    <!-- Card 1: Everest Base Camp -->
+                    <div class="explore-card" data-category="trekking" data-region="everest" data-price="1250">
+                        <div class="explore-card-image">
+                            <img src="../assets/images/everest.jpg" alt="Everest Base Camp">
+                            <span class="card-badge trekking">TREKKING</span>
+                            <span class="card-price-tag">$$</span>
+                        </div>
+                        <div class="explore-card-body">
+                            <div class="card-title-row">
+                                <h3>Everest Base Camp</h3>
+                                <div class="card-rating">
+                                    <i class="fa-solid fa-star"></i>
+                                    <span>4.9</span>
+                                </div>
+                            </div>
+                            <div class="card-location">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span>Solukhumbu, Nepal</span>
+                            </div>
+                            <div class="card-bottom">
+                                <div class="card-price">
+                                    <span class="price-label">STARTING FROM</span>
+                                    <span class="price-value">$1,250</span>
+                                </div>
+                                <a href="#" class="btn-view-trip">View Trip</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Phewa Lake -->
+                    <div class="explore-card" data-category="relaxing" data-region="annapurna" data-price="450">
+                        <div class="explore-card-image">
+                            <img src="../assets/images/pokhara.jpg" alt="Phewa Lake">
+                            <span class="card-badge relaxing">RELAXING</span>
+                            <span class="card-price-tag">$$</span>
+                        </div>
+                        <div class="explore-card-body">
+                            <div class="card-title-row">
+                                <h3>Phewa Lake</h3>
+                                <div class="card-rating">
+                                    <i class="fa-solid fa-star"></i>
+                                    <span>4.8</span>
+                                </div>
+                            </div>
+                            <div class="card-location">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span>Pokhara, Nepal</span>
+                            </div>
+                            <div class="card-bottom">
+                                <div class="card-price">
+                                    <span class="price-label">STARTING FROM</span>
+                                    <span class="price-value">$450</span>
+                                </div>
+                                <a href="#" class="btn-view-trip">View Trip</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Durbar Square -->
+                    <div class="explore-card" data-category="cultural" data-region="kathmandu" data-price="200">
+                        <div class="explore-card-image">
+                            <img src="../assets/images/kathmandu-darbar.jpg" alt="Durbar Square">
+                            <span class="card-badge cultural">CULTURAL</span>
+                            <span class="card-price-tag">$$</span>
+                        </div>
+                        <div class="explore-card-body">
+                            <div class="card-title-row">
+                                <h3>Durbar Square</h3>
+                                <div class="card-rating">
+                                    <i class="fa-solid fa-star"></i>
+                                    <span>4.7</span>
+                                </div>
+                            </div>
+                            <div class="card-location">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span>Kathmandu, Nepal</span>
+                            </div>
+                            <div class="card-bottom">
+                                <div class="card-price">
+                                    <span class="price-label">STARTING FROM</span>
+                                    <span class="price-value">$200</span>
+                                </div>
+                                <a href="#" class="btn-view-trip">View Trip</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Annapurna Circuit -->
+                    <div class="explore-card" data-category="adventure" data-region="annapurna" data-price="980">
+                        <div class="explore-card-image">
+                            <img src="../assets/images/annapurna-circuit.jpg" alt="Annapurna Circuit">
+                            <span class="card-badge adventure">ADVENTURE</span>
+                            <span class="card-price-tag">$$</span>
+                        </div>
+                        <div class="explore-card-body">
+                            <div class="card-title-row">
+                                <h3>Annapurna Circuit</h3>
+                                <div class="card-rating">
+                                    <i class="fa-solid fa-star"></i>
+                                    <span>4.9</span>
+                                </div>
+                            </div>
+                            <div class="card-location">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span>Annapurna, Nepal</span>
+                            </div>
+                            <div class="card-bottom">
+                                <div class="card-price">
+                                    <span class="price-label">STARTING FROM</span>
+                                    <span class="price-value">$980</span>
+                                </div>
+                                <a href="#" class="btn-view-trip">View Trip</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 5: Chitwan Safari -->
+                    <div class="explore-card" data-category="wildlife" data-region="kathmandu" data-price="600">
+                        <div class="explore-card-image">
+                            <img src="../assets/images/chitwan.jpg" alt="Chitwan Safari">
+                            <span class="card-badge wildlife">WILDLIFE</span>
+                            <span class="card-price-tag">$$</span>
+                        </div>
+                        <div class="explore-card-body">
+                            <div class="card-title-row">
+                                <h3>Chitwan Safari</h3>
+                                <div class="card-rating">
+                                    <i class="fa-solid fa-star"></i>
+                                    <span>4.6</span>
+                                </div>
+                            </div>
+                            <div class="card-location">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span>Chitwan, Nepal</span>
+                            </div>
+                            <div class="card-bottom">
+                                <div class="card-price">
+                                    <span class="price-label">STARTING FROM</span>
+                                    <span class="price-value">$600</span>
+                                </div>
+                                <a href="#" class="btn-view-trip">View Trip</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 6: Langtang Valley -->
+                    <div class="explore-card" data-category="trekking" data-region="langtang" data-price="820">
+                        <div class="explore-card-image">
+                            <img src="../assets/images/langtang.jpg" alt="Langtang Valley">
+                            <span class="card-badge hiking">HIKING</span>
+                            <span class="card-price-tag">$$</span>
+                        </div>
+                        <div class="explore-card-body">
+                            <div class="card-title-row">
+                                <h3>Langtang Valley</h3>
+                                <div class="card-rating">
+                                    <i class="fa-solid fa-star"></i>
+                                    <span>4.8</span>
+                                </div>
+                            </div>
+                            <div class="card-location">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span>Rasuwa, Nepal</span>
+                            </div>
+                            <div class="card-bottom">
+                                <div class="card-price">
+                                    <span class="price-label">STARTING FROM</span>
+                                    <span class="price-value">$820</span>
+                                </div>
+                                <a href="#" class="btn-view-trip">View Trip</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button class="page-btn prev" id="prevPage" disabled aria-label="Previous page">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <button class="page-btn active" data-page="1">1</button>
+                    <button class="page-btn" data-page="2">2</button>
+                    <button class="page-btn" data-page="3">3</button>
+                    <button class="page-btn next" id="nextPage" aria-label="Next page">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fa-solid fa-mountain"></i>
+                        <span>Explore Nepal</span>
+                    </div>
+                    <p>The ultimate destination for authentic Himalayan experiences and cultural journeys across the roof of the world.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Share on social media"><i class="fa-solid fa-share-nodes"></i></a>
+                        <a href="#" aria-label="View image gallery"><i class="fa-regular fa-image"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <h4>DISCOVERY</h4>
+                    <ul>
+                        <li><a href="#">Mountain Expeditions</a></li>
+                        <li><a href="#">Spiritual Retreats</a></li>
+                        <li><a href="#">Local Festivals</a></li>
+                        <li><a href="#">Trekking Guides</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>COMPANY</h4>
+                    <ul>
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Partner Program</a></li>
+                        <li><a href="#">Journal</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-newsletter">
+                    <h4>WEEKLY UPDATES</h4>
+                    <p>Join our community for the latest trekking reports and travel tips.</p>
+                    <div class="newsletter-input-row">
+                        <label for="newsletterEmail" class="sr-only">Email address</label>
+                        <input type="email" id="newsletterEmail" placeholder="Your email address">
+                        <button class="btn-subscribe">Join</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>&copy; 2024 EXPLORE NEPAL TRAVEL & TOURS.</span>
+                <div class="footer-bottom-links">
+                    <a href="#">PRIVACY POLICY</a>
+                    <a href="#">TERMS OF SERVICE</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/explore.js"></script>
+</body>
+</html>
