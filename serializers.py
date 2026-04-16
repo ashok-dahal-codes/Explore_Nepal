@@ -1,0 +1,1 @@
+class ContactMessageSerializer(serializers.ModelSerializer):\n    class Meta:  \n        model = ContactMessage  \n        fields = '__all__'  \n\nclass NewsletterSerializer(serializers.ModelSerializer):\n    class Meta:  \n        model = Newsletter  \n        fields = '__all__'  \n
