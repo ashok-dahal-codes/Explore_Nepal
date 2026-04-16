@@ -1,5 +1,5 @@
 import uuid
-
+from rest_framework import viewsets
 import requests as http_requests
 from rest_framework import status
 from rest_framework.views import APIView
@@ -7,8 +7,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .serializers import RegisterSerializer, LoginSerializer, UserProfileSerializer
-from .models import User
+from .serializers import ContactMessageSerializer, NewsletterSerializer, RegisterSerializer, LoginSerializer, UserProfileSerializer
+from .models import ContactMessage, Newsletter, User
 
 
 class RegisterView(APIView):
@@ -267,4 +267,16 @@ class ProfileView(APIView):
                 'user': serializer.data
             }, status=status.HTTP_200_OK)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+class ContactMessageViewSet(viewsets.ModelViewSet):
+    queryset = ContactMessage.objects.all()
+    serializer_class = ContactMessageSerializer
+    permission_classes = [AllowAny]
+
+
+class NewsletterViewSet(viewsets.ModelViewSet):
+    queryset = Newsletter.objects.all()
+    serializer_class = NewsletterSerializer
+    permission_classes = [AllowAny]

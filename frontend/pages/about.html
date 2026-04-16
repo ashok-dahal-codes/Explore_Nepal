@@ -185,13 +185,23 @@
                     </ul>
                 </div>
 
-                <div class="footer-newsletter">
-                    <h4>NEWSLETTER</h4>
-                    <p>Join our newsletter for travel guides and exclusive local insights.</p>
-                    <label for="aboutNewsletterEmail" class="sr-only">Email address</label>
-                    <input type="email" id="aboutNewsletterEmail" placeholder="Your email">
-                    <button class="btn-subscribe">Subscribe</button>
-                </div>
+    <div class="newsletter-content">
+        <h2>NEWSLETTER</h2>
+        <p>Join our newsletter for travel guides and exclusive local insights.</p>
+        
+        <form id="newsletterForm">
+            <div class="form-group">
+                <input 
+                    type="email" 
+                    id="newsletterEmail" 
+                    placeholder="Your email" 
+                    required
+                >
+            </div>
+            <button type="submit" class="btn-subscribe">Subscribe</button>
+            <div id="newsletterMessage"></div>
+        </form>
+    </div>
             </div>
 
             <div class="footer-bottom">

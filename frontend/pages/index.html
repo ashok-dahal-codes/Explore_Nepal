@@ -173,7 +173,6 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
-
                 <div class="footer-brand">
                     <div class="footer-logo">
                         <i class="fa-solid fa-mountain"></i>
@@ -199,23 +198,34 @@
                 <div class="footer-links">
                     <h4>COMPANY</h4>
                     <ul>
-                        <li><a href="about.html">About Us</a></li>                        <li><a href="#">Our Team</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#">Our Team</a></li>
                         <li><a href="#">Sustainability</a></li>
                         <li><a href="#">Careers</a></li>
                     </ul>
                 </div>
 
-                <div class="footer-newsletter">
-                    <h4>NEWSLETTER</h4>
-                    <p>Join our newsletter for travel guides and exclusive local insights.</p>
-                    <input type="email" placeholder="Your email">
-                    <button class="btn-subscribe">Subscribe</button>
-                </div>
-
+    <div class="newsletter-content">
+        <h2>NEWSLETTER</h2>
+        <p>Join our newsletter for travel guides and exclusive local insights.</p>
+        
+        <form id="newsletterForm">
+            <div class="form-group">
+                <input 
+                    type="email" 
+                    id="newsletterEmail" 
+                    placeholder="Your email" 
+                    required
+                >
+            </div>
+            <button type="submit" class="btn-subscribe">Subscribe</button>
+            <div id="newsletterMessage"></div>
+        </form>
+    </div>
             </div>
 
             <div class="footer-bottom">
-                <span>2024 EXPLORE NEPAL TRAVEL. ALL RIGHTS RESERVED.</span>
+                <span>&copy; 2024 EXPLORE NEPAL TRAVEL. ALL RIGHTS RESERVED.</span>
                 <div class="footer-bottom-links">
                     <a href="#">PRIVACY POLICY</a>
                     <a href="#">TERMS OF SERVICE</a>
@@ -224,6 +234,7 @@
             </div>
         </div>
     </footer>
+
 
     <script src="../js/main.js"></script>
 </body>

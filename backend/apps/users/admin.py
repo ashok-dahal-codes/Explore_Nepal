@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import User
+from .models import ContactMessage, User
 
 
 @admin.register(User)
@@ -45,3 +45,20 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('email', 'full_name', 'password1', 'password2'),
         }),
     )
+
+
+from django.contrib import admin
+from .models import User, ContactMessage, Newsletter
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ['full_name', 'email', 'subject', 'created_at']
+    search_fields = ['full_name', 'email', 'subject']
+    list_filter = ['created_at']
+    readonly_fields = ['created_at']
+
+@admin.register(Newsletter)
+class NewsletterAdmin(admin.ModelAdmin):
+    list_display = ['email', 'subscribed_at', 'is_active']
+    search_fields = ['email']
+    list_filter = ['subscribed_at', 'is_active']

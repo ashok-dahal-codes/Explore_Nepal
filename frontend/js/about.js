@@ -13,3 +13,44 @@ if (themeBtn) {
         }
     });
 }
+// Newsletter subscription
+const newsletterForm = document.getElementById('newsletterForm');
+if (newsletterForm) {
+    newsletterForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById('newsletterEmail');
+        const messageDiv = document.getElementById('newsletterMessage');
+
+        try {
+            const response = await fetch('http://localhost:8000/api/users/newsletter/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email.value.trim()
+                })
+            });
+
+            if (response.ok) {
+                messageDiv.innerHTML = '<p style="color: #4CAF50; font-weight: bold;">✓ Subscribed successfully!</p>';
+                newsletterForm.reset();
+                
+                setTimeout(() => {
+                    messageDiv.innerHTML = '';
+                }, 3000);
+            } else {
+                const errorData = await response.json();
+                if (errorData.email && errorData.email[0].includes('already exists')) {
+                    messageDiv.innerHTML = '<p style="color: #2196F3; font-weight: bold;">You are already subscribed!</p>';
+                } else {
+                    messageDiv.innerHTML = '<p style="color: #f44336; font-weight: bold;">Error subscribing. Try again.</p>';
+                }
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            messageDiv.innerHTML = '<p style="color: #f44336; font-weight: bold;">Network error.</p>';
+        }
+    });
+}

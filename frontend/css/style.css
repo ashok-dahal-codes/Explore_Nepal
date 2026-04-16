@@ -904,3 +904,59 @@ body.dark .step h3 {
 .navbar.scrolled .nav-user-btn:hover {
     background: rgba(0, 0, 0, 0.05);
 }
+.newsletter {
+    background-color: #1a3a2e;
+    padding: 40px 20px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.newsletter h2 {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.newsletter p {
+    color: #9ccc65;
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+#newsletterForm {
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#newsletterEmail {
+    padding: 12px 80px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+#newsletterEmail::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.btn-subscribe {
+    padding: 12px 20px;
+    background-color: white;
+    color: #1a3a2e;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #f0f0f0;
+}
