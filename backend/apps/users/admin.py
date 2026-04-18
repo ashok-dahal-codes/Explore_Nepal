@@ -62,3 +62,16 @@ class NewsletterAdmin(admin.ModelAdmin):
     list_display = ['email', 'subscribed_at', 'is_active']
     search_fields = ['email']
     list_filter = ['subscribed_at', 'is_active']
+    actions = ['activate_subscribers', 'deactivate_subscribers']
+
+    def activate_subscribers(self, request, queryset):
+        count = queryset.update(is_active=True)
+        self.message_user(request, f"✓ {count} subscribers activated.")
+    
+    activate_subscribers.short_description = "✅ Activate Selected Subscribers"
+
+    def deactivate_subscribers(self, request, queryset):
+        count = queryset.update(is_active=False)
+        self.message_user(request, f" {count} subscribers deactivated.")
+    
+    deactivate_subscribers.short_description = " Deactivate Selected Subscribers"

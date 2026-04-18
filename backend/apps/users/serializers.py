@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from .models import ContactMessage, Newsletter
+from .email_service import EmailService  # ← Add this import
 
 User = get_user_model()
 
@@ -98,20 +99,42 @@ class UserProfileSerializer(serializers.ModelSerializer):
 class ContactMessageSerializer(serializers.ModelSerializer):
     """
     For handling contact form submissions.
-    Accepts: full_name, email, subject, message
+    Sends reply email automatically.
     """
     class Meta:
         model = ContactMessage
         fields = ['id', 'full_name', 'email', 'subject', 'message', 'created_at']
         read_only_fields = ['id', 'created_at']
+    
+    def create(self, validated_data):
+        # Create the contact message
+        contact = super().create(validated_data)
+        
+        # Send reply email
+        EmailService.send_contact_reply_email(
+            contact.email,
+            contact.full_name,
+            contact.subject
+        )
+        
+        return contact
 
 
 class NewsletterSerializer(serializers.ModelSerializer):
     """
     For handling newsletter subscriptions.
-    Accepts: email
+    Sends welcome email automatically.
     """
     class Meta:
         model = Newsletter
         fields = ['id', 'email', 'subscribed_at']
         read_only_fields = ['id', 'subscribed_at']
+    
+    def create(self, validated_data):
+        # Create the newsletter subscription
+        newsletter = super().create(validated_data)
+        
+        # Send welcome email
+        EmailService.send_newsletter_welcome_email(newsletter.email)
+        
+        return newsletter

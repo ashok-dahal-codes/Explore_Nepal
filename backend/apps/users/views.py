@@ -1,43 +1,27 @@
-import uuid
-from rest_framework import viewsets
-import requests as http_requests
-from rest_framework import status
-from rest_framework.views import APIView
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
+from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
-
-from .serializers import ContactMessageSerializer, NewsletterSerializer, RegisterSerializer, LoginSerializer, UserProfileSerializer
-from .models import ContactMessage, Newsletter, User
+from .serializers import (
+    ContactMessageSerializer, RegisterSerializer, LoginSerializer, 
+    UserProfileSerializer, NewsletterSerializer
+)
+from .models import ContactMessage, Newsletter
+from .email_service import EmailService
+import requests as http_requests
+import uuid
 
 
 class RegisterView(APIView):
-    """
-    POST /api/users/register/
-
-    Allows anyone (no login required) to create a tourist account.
-
-    What happens:
-    1. Frontend sends: { email, full_name, password, password_confirm }
-    2. Serializer validates the data
-    3. Creates user in database
-    4. Generates JWT tokens
-    5. Returns tokens + user info
-    """
-
-    # AllowAny = no login required (tourists need to register BEFORE they have an account!)
     permission_classes = [AllowAny]
 
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
 
-        # Check if data is valid (email format, passwords match, etc.)
         if serializer.is_valid():
-            # Save user to database (calls serializer's create() method)
             user = serializer.save()
-
-            # Generate JWT tokens for the new user
-            # So they're automatically logged in after registering
             refresh = RefreshToken.for_user(user)
 
             return Response({
@@ -53,34 +37,17 @@ class RegisterView(APIView):
                 }
             }, status=status.HTTP_201_CREATED)
 
-        # If validation failed, return errors
-        # Example: { "email": ["A user with this email already exists."] }
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class LoginView(APIView):
-    """
-    POST /api/users/login/
-
-    Allows anyone to login with email + password.
-
-    What happens:
-    1. Frontend sends: { email, password }
-    2. Serializer checks credentials against database
-    3. If correct, generates JWT tokens
-    4. Returns tokens + user info
-    """
-
     permission_classes = [AllowAny]
 
     def post(self, request):
         serializer = LoginSerializer(data=request.data, context={'request': request})
 
         if serializer.is_valid():
-            # Get the authenticated user from serializer
             user = serializer.validated_data['user']
-
-            # Generate JWT tokens
             refresh = RefreshToken.for_user(user)
 
             return Response({
@@ -100,23 +67,10 @@ class LoginView(APIView):
 
 
 class LogoutView(APIView):
-    """
-    POST /api/users/logout/
-
-    Requires login. Blacklists the refresh token so it can't be used again.
-
-    What happens:
-    1. Frontend sends: { refresh: "the_refresh_token" }
-    2. Server blacklists that token
-    3. User must login again to get new tokens
-    """
-
-    # IsAuthenticated = must be logged in (must send access token in header)
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
         try:
-            # Get the refresh token from request body
             refresh_token = request.data.get('refresh')
 
             if not refresh_token:
@@ -124,7 +78,6 @@ class LogoutView(APIView):
                     'error': 'Refresh token is required.'
                 }, status=status.HTTP_400_BAD_REQUEST)
 
-            # Blacklist the token so it can't be used again
             token = RefreshToken(refresh_token)
             token.blacklist()
 
@@ -138,15 +91,31 @@ class LogoutView(APIView):
             }, status=status.HTTP_400_BAD_REQUEST)
 
 
+class ProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        serializer = UserProfileSerializer(request.user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def patch(self, request):
+        serializer = UserProfileSerializer(
+            request.user,
+            data=request.data,
+            partial=True
+        )
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({
+                'message': 'Profile updated successfully!',
+                'user': serializer.data
+            }, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class SocialLoginView(APIView):
-    """
-    POST /api/users/social-login/
-
-    Authenticates a user via Google or Facebook OAuth access token.
-    Creates a new account if the email doesn't exist yet.
-    Returns JWT tokens + user data.
-    """
-
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -165,7 +134,6 @@ class SocialLoginView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # Verify token with Google and get user info
         try:
             resp = http_requests.get(
                 'https://www.googleapis.com/oauth2/v2/userinfo',
@@ -193,15 +161,14 @@ class SocialLoginView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # Derive full name from provider response
         full_name = social_data.get('name') or email.split('@')[0]
 
-        # Get or create user
+        from .models import User
         user, created = User.objects.get_or_create(
             email=email,
             defaults={
                 'full_name': full_name,
-                'password': uuid.uuid4().hex,  # unusable random password
+                'password': uuid.uuid4().hex,
             },
         )
 
@@ -211,7 +178,6 @@ class SocialLoginView(APIView):
                 status=status.HTTP_403_FORBIDDEN,
             )
 
-        # Generate JWT tokens
         refresh = RefreshToken.for_user(user)
 
         return Response({
@@ -228,55 +194,67 @@ class SocialLoginView(APIView):
         }, status=status.HTTP_200_OK)
 
 
-class ProfileView(APIView):
-    """
-    GET    /api/users/profile/  → View your profile
-    PATCH  /api/users/profile/  → Update your profile (name, phone, picture)
-
-    Requires login. Returns/updates the CURRENT logged-in user's profile.
-    """
-
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        """
-        Return the current user's profile data.
-        request.user = the logged-in user (Django sets this from the JWT token)
-        """
-        serializer = UserProfileSerializer(request.user)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def patch(self, request):
-        """
-        Update the current user's profile.
-        partial=True means they don't have to send ALL fields,
-        just the ones they want to change.
-
-        Example: { "phone": "9841234567" } — only updates phone
-        """
-        serializer = UserProfileSerializer(
-            request.user,           # Which user to update
-            data=request.data,      # New data from frontend
-            partial=True            # Allow partial updates
-        )
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response({
-                'message': 'Profile updated successfully!',
-                'user': serializer.data
-            }, status=status.HTTP_200_OK)
-
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    
 class ContactMessageViewSet(viewsets.ModelViewSet):
+    """
+    API endpoints for contact messages.
+    POST /api/users/contact/ - Create a new contact message (sends reply email)
+    """
     queryset = ContactMessage.objects.all()
     serializer_class = ContactMessageSerializer
     permission_classes = [AllowAny]
 
 
 class NewsletterViewSet(viewsets.ModelViewSet):
+    """
+    API endpoints for newsletter subscriptions.
+    POST /api/users/newsletter/ - Subscribe to newsletter (sends welcome email)
+    GET /api/users/newsletter/ - List all subscribers (admin only)
+    DELETE /api/users/newsletter/{id}/ - Unsubscribe (admin only)
+    """
     queryset = Newsletter.objects.all()
     serializer_class = NewsletterSerializer
     permission_classes = [AllowAny]
+
+    @action(detail=False, methods=['post'], permission_classes=[IsAdminUser])
+    def send_promotional(self, request):
+        """
+        POST /api/users/newsletter/send_promotional/
+        Send promotional email to active subscribers
+        
+        Body: {
+            "subject": "...",
+            "message_html": "..."
+        }
+        """
+        subject = request.data.get('subject')
+        message_html = request.data.get('message_html')
+
+        if not subject or not message_html:
+            return Response(
+                {'error': 'Subject and message_html are required.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Get active subscribers
+        subscribers = Newsletter.objects.filter(is_active=True)
+        emails = list(subscribers.values_list('email', flat=True))
+
+        if not emails:
+            return Response(
+                {'error': 'No active subscribers found.'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        # Send email
+        success = EmailService.send_promotional_email(subject, message_html, emails)
+
+        if success:
+            return Response({
+                'message': f'✓ Email sent to {len(emails)} subscribers!',
+                'count': len(emails)
+            }, status=status.HTTP_200_OK)
+        else:
+            return Response(
+                {'error': 'Error sending emails.'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
